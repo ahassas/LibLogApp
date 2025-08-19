@@ -9,7 +9,7 @@ struct FavoriteButton: View {
         Button {
             favoriteManager.toggleFavorite(book: book)
         } label: {
-            Image(favoriteManager.isFavorite(book: book) ? "savedFill" : "savedEmpty")
+            Image(favoriteManager.isFavorite(book: book) ? "heart.fill" : "heart")
                 .resizable()
                 .frame(width: 19, height: 24)
                 .foregroundColor(favoriteManager.isFavorite(book: book) ? Color("PrimaryRed") : .gray)
