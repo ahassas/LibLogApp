@@ -6,6 +6,8 @@ struct ProfileView: View {
     @State private var showPhotoPicker = false
     @State private var selectedItem: PhotosPickerItem? = nil
     
+    @Environment(\.dismiss) private var dismiss
+    
     @EnvironmentObject var tabBarManager: TabBarManager
     @EnvironmentObject var userProfile: UserProfile
 
@@ -13,7 +15,6 @@ struct ProfileView: View {
     private let avatarNames = ["Charles Dickens","Henry James","Jane Austen","Shakespeare","Virginia Woolf"]
     
     var body: some View {
-        NavigationStack {
             VStack(spacing: 25) {
              
                 
@@ -81,13 +82,20 @@ struct ProfileView: View {
                 
               
                 
-                PrimaryButton(title: "Save", destination: MainTabView())
-                    .simultaneousGesture(TapGesture().onEnded {
+                Button(action: {
                         if let avatar = tempSelectedAvatar {
                             userProfile.selectedAvatar = avatar
+                                }
+                            dismiss()
+                            }) {
+                        Text("Save")
+                                .font(AppFont.title(size: 18))
+                                .foregroundColor(.white)
+                                .frame(width: 220, height: 55)
+                                .background(Color("PrimaryRed"))
+                                .cornerRadius(10)
                         }
-                    })
-                    .padding(.bottom, 50)
+                        .padding(.bottom, 50)
             }
             .padding(.top, 40)
             .photosPicker(isPresented: $showPhotoPicker, selection: $selectedItem, matching: .images)
@@ -105,7 +113,7 @@ struct ProfileView: View {
             .onDisappear { tabBarManager.isHidden = false }
         }
     }
-}
+
 
 
 

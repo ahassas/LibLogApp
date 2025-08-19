@@ -1,40 +1,19 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @StateObject private var favoriteManager = FavoriteManager()
-    @StateObject private var tabBarManager = TabBarManager()
-    @StateObject private var userProfile = UserProfile()
+    @EnvironmentObject var favoriteManager: FavoriteManager
+    @EnvironmentObject var tabBarManager: TabBarManager
+    @EnvironmentObject var userProfile: UserProfile
     @State private var selectedIndex = 0
     
     var body: some View {
-        NavigationStack {
             VStack(spacing: 0) {
                 Group {
                     switch selectedIndex {
-                    case 0:
-                        HomeView()
-                            .environmentObject(favoriteManager)
-                            .environmentObject(tabBarManager)
-                            .environmentObject(userProfile)
-                            .onAppear { tabBarManager.isHidden = false }
-                    case 1:
-                        FavoriteView()
-                            .environmentObject(favoriteManager)
-                            .environmentObject(tabBarManager)
-                            .environmentObject(userProfile)
-                            .onAppear { tabBarManager.isHidden = false }
-                    case 2:
-                        SearchView()
-                            .environmentObject(favoriteManager)
-                            .environmentObject(tabBarManager)
-                            .environmentObject(userProfile)
-                            .onAppear { tabBarManager.isHidden = false }
-                    default:
-                        HomeView()
-                            .environmentObject(favoriteManager)
-                            .environmentObject(tabBarManager)
-                            .environmentObject(userProfile)
-                            .onAppear { tabBarManager.isHidden = false }
+                          case 0: HomeView()
+                          case 1: FavoriteView()
+                          case 2: SearchView()
+                          default: HomeView()
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -72,12 +51,11 @@ struct MainTabView: View {
                 }
             }
         }
-        .environmentObject(favoriteManager)
-        .environmentObject(tabBarManager)
-        .environmentObject(userProfile)
     }
-}
 
-#Preview {
-    MainTabView()
-}
+    #Preview {
+        MainTabView()
+            .environmentObject(FavoriteManager())
+            .environmentObject(TabBarManager())
+            .environmentObject(UserProfile())
+    }
