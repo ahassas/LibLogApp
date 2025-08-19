@@ -50,6 +50,9 @@ struct EntryView: View {
             }
             .ignoresSafeArea()
         }
+        .ignoresSafeArea(edges: .top)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 }
 

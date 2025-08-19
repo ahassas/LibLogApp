@@ -9,8 +9,8 @@ struct CustomBackButton: View {
         } label: {
             Image(systemName: "chevron.left")
                 .resizable()
-                .frame(width: 12, height: 20) // Daha tutarlı boyut
-                .foregroundColor(.black)      // Her zaman görünür
+                .frame(width: 12, height: 20)
+                .foregroundColor(.black)
         }
     }
 }
