@@ -29,7 +29,6 @@ struct BookItem: View {
                 .font(AppFont.regular(size: 14))
                 .foregroundColor(Color("EntryDescription"))
         }
-        
     }
 }
 

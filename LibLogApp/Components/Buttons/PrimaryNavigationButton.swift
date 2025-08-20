@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct PrimaryButton: View {
+struct PrimaryNavigationButton<Destination: View>: View {
     var title: String
-    var action: () -> Void
+    var destination: Destination
     
     var body: some View {
-        Button(action: action) {
+        NavigationLink(destination: destination) {
             Text(title)
                 .font(AppFont.title(size: 18))
                 .foregroundColor(.white)

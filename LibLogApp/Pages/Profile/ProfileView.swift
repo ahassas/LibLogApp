@@ -8,27 +8,25 @@ struct ProfileView: View {
     
     @EnvironmentObject var tabBarManager: TabBarManager
     @EnvironmentObject var userProfile: UserProfile
-
+    
+    @Environment(\.dismiss) private var dismiss
+    
     private let exampleAvatars = ["charlesdickens","henryjames","janeausten","shakespeare","virginiawoolf"]
     private let avatarNames = ["Charles Dickens","Henry James","Jane Austen","Shakespeare","Virginia Woolf"]
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 25) {
-             
                 
                 Text("Pick an Avatar")
                     .font(AppFont.title(size: 28))
                     .foregroundColor(Color("PrimaryRed"))
-                
                 
                 Text("Choose from our classic authors or upload your own photo.")
                     .font(AppFont.regular(size: 16))
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 40)
-                
-             
                 
                 Image(uiImage: tempSelectedAvatar ?? userProfile.selectedAvatar ?? UIImage(named: "charlesdickens")!)
                     .resizable()
@@ -37,8 +35,6 @@ struct ProfileView: View {
                     .clipShape(Circle())
                     .overlay(Circle().stroke(Color("PrimaryRed"), lineWidth: 3))
                     .shadow(radius: 5)
-                
-      
                 
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 3), spacing: 20) {
                     ForEach(0..<exampleAvatars.count, id: \.self) { index in
@@ -59,8 +55,6 @@ struct ProfileView: View {
                                 .foregroundColor(.primary)
                         }
                     }
-               
-                    
                     
                     VStack(spacing: 8) {
                         Button {
@@ -79,35 +73,31 @@ struct ProfileView: View {
                 
                 Spacer()
                 
-              
-                
-                PrimaryButton(title: "Save", destination: MainTabView())
-                    .simultaneousGesture(TapGesture().onEnded {
-                        if let avatar = tempSelectedAvatar {
-                            userProfile.selectedAvatar = avatar
-                        }
-                    })
-                    .padding(.bottom, 50)
-            }
-            .padding(.top, 40)
-            .photosPicker(isPresented: $showPhotoPicker, selection: $selectedItem, matching: .images)
-            .onChange(of: selectedItem) { newItem in
-                Task {
-                    if let data = try? await newItem?.loadTransferable(type: Data.self),
-                       let uiImage = UIImage(data: data) {
-                        tempSelectedAvatar = uiImage
+                PrimaryButton(title: "Save") {
+                    if let avatar = tempSelectedAvatar {
+                        userProfile.selectedAvatar = avatar
+                        self.dismiss()
                     }
                 }
+                .padding(.bottom, 50)
+                .padding(.top, 40)
+                .photosPicker(isPresented: $showPhotoPicker, selection: $selectedItem, matching: .images)
+                .onChange(of: selectedItem) { newItem in
+                    Task {
+                        if let data = try? await newItem?.loadTransferable(type: Data.self),
+                           let uiImage = UIImage(data: data) {
+                            tempSelectedAvatar = uiImage
+                        }
+                    }
+                }
+                .navigationBarBackButtonHidden(true)
+                .toolbar { ToolbarItem(placement: .navigationBarLeading) { CustomBackButton() } }
+                .onAppear { tabBarManager.isHidden = true }
+                .onDisappear { tabBarManager.isHidden = false }
             }
-            .navigationBarBackButtonHidden(true)
-            .toolbar { ToolbarItem(placement: .navigationBarLeading) { CustomBackButton() } }
-            .onAppear { tabBarManager.isHidden = true }
-            .onDisappear { tabBarManager.isHidden = false }
         }
     }
 }
-
-
 
 #Preview {
     ProfileView()

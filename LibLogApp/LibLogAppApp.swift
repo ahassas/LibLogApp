@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct MyApp: App {
+struct LibLogApp: App {
     @StateObject private var favoriteManager = FavoriteManager()
    
     var body: some Scene {
