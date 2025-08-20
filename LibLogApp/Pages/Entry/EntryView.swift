@@ -40,10 +40,10 @@ struct EntryView: View {
                 Spacer()
                     .frame(height: 4)
                 
-                PrimaryButton(title: "Log In", destination: LoginView())
+                PrimaryNavigationButton(title: "Log In", destination: LoginView())
                     .padding(.top, 30)
                 
-                SecondaryButton(title: "Sign Up", destination: RegisterView())
+                SecondaryNavigationButton(title: "Sign Up", destination: RegisterView())
                     .padding(.top, 15)
                 
                 Spacer()

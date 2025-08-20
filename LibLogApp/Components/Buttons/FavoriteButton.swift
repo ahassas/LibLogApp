@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct FavoriteButton: View {
@@ -9,9 +8,10 @@ struct FavoriteButton: View {
         Button {
             favoriteManager.toggleFavorite(book: book)
         } label: {
-            Image(favoriteManager.isFavorite(book: book) ? "heart.fill" : "heart")
+            Image(systemName: favoriteManager.isFavorite(book: book) ? "heart.fill" : "heart")
                 .resizable()
-                .frame(width: 19, height: 24)
+                .scaledToFit()
+                .frame(width: 24, height: 30)
                 .foregroundColor(favoriteManager.isFavorite(book: book) ? Color("PrimaryRed") : .gray)
         }
     }

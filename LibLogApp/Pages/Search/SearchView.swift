@@ -22,9 +22,9 @@ struct SearchView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                
                 TextField("Search books...", text: $searchText, onCommit: {
                    
-                    
                 })
                 .padding(10)
                 .padding(.horizontal, 30)
@@ -65,8 +65,7 @@ struct SearchView: View {
                         
                         Spacer()
                             .frame(height: 70)
-                        
-                        
+                
                         Image("lamp")
                             .resizable()
                             .scaledToFit()
@@ -112,7 +111,6 @@ struct SearchView: View {
                                     )
                                 }
                                     .buttonStyle(PressableButtonStyle())
-                                
                             }
                         }
                         .padding(.horizontal, 20)
@@ -125,7 +123,6 @@ struct SearchView: View {
         }
     }
 }
-
 
 #Preview {
         SearchView()

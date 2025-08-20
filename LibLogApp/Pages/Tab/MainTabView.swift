@@ -13,27 +13,15 @@ struct MainTabView: View {
                     switch selectedIndex {
                     case 0:
                         HomeView()
-                            .environmentObject(favoriteManager)
-                            .environmentObject(tabBarManager)
-                            .environmentObject(userProfile)
                             .onAppear { tabBarManager.isHidden = false }
                     case 1:
                         FavoriteView()
-                            .environmentObject(favoriteManager)
-                            .environmentObject(tabBarManager)
-                            .environmentObject(userProfile)
                             .onAppear { tabBarManager.isHidden = false }
                     case 2:
                         SearchView()
-                            .environmentObject(favoriteManager)
-                            .environmentObject(tabBarManager)
-                            .environmentObject(userProfile)
                             .onAppear { tabBarManager.isHidden = false }
                     default:
                         HomeView()
-                            .environmentObject(favoriteManager)
-                            .environmentObject(tabBarManager)
-                            .environmentObject(userProfile)
                             .onAppear { tabBarManager.isHidden = false }
                     }
                 }
@@ -49,7 +37,7 @@ struct MainTabView: View {
                         }
                         Spacer()
                         Button { selectedIndex = 1 } label: {
-                            Image(systemName: "bookmark")
+                            Image(systemName: selectedIndex == 1 ? "heart.fill" : "heart")
                                 .font(.system(size: 24))
                                 .foregroundColor(selectedIndex == 1 ? Color("PrimaryRed") : Color.gray.opacity(0.6))
                         }
@@ -72,9 +60,6 @@ struct MainTabView: View {
                 }
             }
         }
-        .environmentObject(favoriteManager)
-        .environmentObject(tabBarManager)
-        .environmentObject(userProfile)
     }
 }
 
