@@ -9,6 +9,8 @@ struct ProfileView: View {
     @EnvironmentObject var tabBarManager: TabBarManager
     @EnvironmentObject var userProfile: UserProfile
     
+    @AppStorage("isLoggedIn") private var isLoggedIn = true
+    
     @Environment(\.dismiss) private var dismiss
     
     private let exampleAvatars = ["charlesdickens","henryjames","janeausten","shakespeare","virginiawoolf"]
@@ -21,6 +23,7 @@ struct ProfileView: View {
                 Text("Pick an Avatar")
                     .font(AppFont.title(size: 28))
                     .foregroundColor(Color("PrimaryRed"))
+                    .padding(.vertical, 10)
                 
                 Text("Choose from our classic authors or upload your own photo.")
                     .font(AppFont.regular(size: 16))
@@ -91,7 +94,17 @@ struct ProfileView: View {
                     }
                 }
                 .navigationBarBackButtonHidden(true)
-                .toolbar { ToolbarItem(placement: .navigationBarLeading) { CustomBackButton() } }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        CustomBackButton()
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        LogoutButton(logoutAction: {
+                            userProfile.selectedAvatar = nil
+                            isLoggedIn = false
+                        })
+                    }
+                }
                 .onAppear { tabBarManager.isHidden = true }
                 .onDisappear { tabBarManager.isHidden = false }
             }

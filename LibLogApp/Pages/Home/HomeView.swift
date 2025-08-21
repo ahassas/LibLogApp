@@ -6,6 +6,8 @@ struct HomeView: View {
     @EnvironmentObject var userProfile: UserProfile
     @State private var selectedGenre: String = "All"
     
+    @AppStorage("savedUsername") private var savedUsername = ""
+    
     private let columns = [
         GridItem(.flexible(), spacing: 15),
         GridItem(.flexible(), spacing: 15)
@@ -17,7 +19,7 @@ struct HomeView: View {
                 VStack(alignment: .leading) {
                     
                     HStack {
-                        Text("Welcome back username!")
+                        Text("Welcome back \(savedUsername)!")
                             .font(AppFont.regular(size: 19))
                             .foregroundColor(Color("EntryDescription"))
                         
