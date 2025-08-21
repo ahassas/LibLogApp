@@ -280,19 +280,8 @@ struct BookData {
             category: "Military Strategy",
             publisher: "Oxford University Press",
             language: "English"
-        ),
-        Book(
-            id: UUID().uuidString,
-            imageName: "stevejobs",
-            title: "Steve Jobs",
-            author: "Walter Isaacson",
-            genre: "Biography",
-            description: "The definitive biography of Steve Jobs, based on interviews with friends, family, and colleagues.",
-            pageCount: 656,
-            category: "Biography",
-            publisher: "Simon & Schuster",
-            language: "English"
         )
+        
     ]
 }
 extension BookData {
