@@ -26,6 +26,10 @@ struct RegisterView: View {
         usernameValid && passwordValid && passwordsMatch
     }
     
+    private var allFieldsFilled: Bool {
+        !username.isEmpty && !password.isEmpty && !confirmPassword.isEmpty
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -44,7 +48,6 @@ struct RegisterView: View {
                     
                     Text("Create Account")
                         .font(AppFont.title(size: 25))
-                    
                     
                     VStack(alignment: .leading, spacing: 2) {
                         TextField("Username", text: $username)
@@ -66,7 +69,6 @@ struct RegisterView: View {
                         }
                     }
                     
-                    
                     VStack(alignment: .leading, spacing: 2) {
                         SecureField("Password", text: $password)
                             .padding()
@@ -87,7 +89,6 @@ struct RegisterView: View {
                         }
                     }
                     
-                    
                     VStack(alignment: .leading, spacing: 2) {
                         SecureField("Confirm Password", text: $confirmPassword)
                             .padding()
@@ -107,24 +108,29 @@ struct RegisterView: View {
                         }
                     }
                     
+                    if attempted && !allValid {
+                        Text("Please fix the errors above before continuing")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                            .padding(.top, 4)
+                    }
+                    
                     NavigationLink("", destination: EntryView(), isActive: $navigateToEntry)
                         .hidden()
                     
-                    Button(action: {
-                        attempted = true
-                        if allValid {
-                            savedUsername = username
-                            savedPassword = password
-                            navigateToEntry = true
-                        }
-                    }) {
-                        Text("Register")
-                            .font(AppFont.title(size: 18))
-                            .foregroundColor(.white)
-                            .frame(width: 220, height: 55)
-                            .background(Color("PrimaryRed"))
-                            .cornerRadius(10)
-                    }
+                    PrimaryButton(
+                        title: "Register",
+                        action: {
+                            attempted = true
+                            if allValid {
+                                savedUsername = username
+                                savedPassword = password
+                                navigateToEntry = true
+                            }
+                        },
+                        isEnabled: allFieldsFilled
+                    )
+                    .padding(.top, 20)
                     
                     Spacer()
                 }
