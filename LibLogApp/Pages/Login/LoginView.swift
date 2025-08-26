@@ -10,6 +10,10 @@ struct LoginView: View {
     @AppStorage("savedUsername") private var savedUsername = ""
     @AppStorage("savedPassword") private var savedPassword = ""
     
+    private var loginValid: Bool {
+        !username.isEmpty && !password.isEmpty
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -29,7 +33,6 @@ struct LoginView: View {
                     Text("Welcome to LibLog!")
                         .font(AppFont.title(size: 25))
                     
-                   
                     TextField("Username", text: $username)
                         .padding()
                         .frame(width: 300, height: 50)
@@ -40,8 +43,7 @@ struct LoginView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(attempted && username.isEmpty ? Color.red : Color.clear, lineWidth: 2)
                         )
-                    
-                    
+
                     SecureField("Password", text: $password)
                         .padding()
                         .frame(width: 300, height: 50)
@@ -53,7 +55,6 @@ struct LoginView: View {
                                 .stroke(attempted && password.isEmpty ? Color.red : Color.clear, lineWidth: 2)
                         )
                     
-                    
                     if attempted && !errorMessage.isEmpty {
                         Text(errorMessage)
                             .font(.caption)
@@ -64,31 +65,20 @@ struct LoginView: View {
                     NavigationLink("", destination: MainTabView(), isActive: $navigateToHome)
                         .hidden()
                     
-                    Button(action: {
+                    PrimaryButton(title: "Sign In", action: {
                         attempted = true
                         
-                        if username.isEmpty || password.isEmpty {
+                        if !loginValid {
                             errorMessage = "Please fill in all fields"
                         }
-                        
                         else if (username == "Admin1" && password == "Admin1") || (username == savedUsername && password == savedPassword) {
                             errorMessage = ""
                             navigateToHome = true
                         }
-                        
                         else {
                             errorMessage = "Invalid username or password"
                         }
-                    })
-                    
-                    {
-                        Text("Sign In")
-                            .font(AppFont.title(size: 18))
-                            .foregroundColor(.white)
-                            .frame(width: 220, height: 55)
-                            .background(Color("PrimaryRed"))
-                            .cornerRadius(10)
-                    }
+                    }, isEnabled: loginValid)
                     .padding(.top, 30)
                     
                     Spacer()

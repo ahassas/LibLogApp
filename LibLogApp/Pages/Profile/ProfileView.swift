@@ -16,6 +16,10 @@ struct ProfileView: View {
     private let exampleAvatars = ["charlesdickens","henryjames","janeausten","shakespeare","virginiawoolf"]
     private let avatarNames = ["Charles Dickens","Henry James","Jane Austen","Shakespeare","Virginia Woolf"]
     
+    private var saveValid: Bool {
+        tempSelectedAvatar != nil
+    }
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 25) {
@@ -76,12 +80,12 @@ struct ProfileView: View {
                 
                 Spacer()
                 
-                PrimaryButton(title: "Save") {
+                PrimaryButton(title: "Save", action: {
                     if let avatar = tempSelectedAvatar {
                         userProfile.selectedAvatar = avatar
                         self.dismiss()
                     }
-                }
+                }, isEnabled: saveValid)
                 .padding(.bottom, 50)
                 .padding(.top, 40)
                 .photosPicker(isPresented: $showPhotoPicker, selection: $selectedItem, matching: .images)
