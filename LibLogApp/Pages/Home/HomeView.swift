@@ -73,9 +73,10 @@ struct HomeView: View {
                     
                     Text("Popular books")
                         .font(AppFont.title(size: 25))
-                        .frame(maxWidth: .infinity, alignment: .center)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
                         .padding(.top, 20)
-                    
+
                     GenreSelector(selectedGenre: $selectedGenre)
                     
                     LazyVGrid(columns: columns, spacing: 20) {

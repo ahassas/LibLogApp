@@ -9,21 +9,20 @@ struct BookItem: View {
     var titleToAuthorSpacing: CGFloat = 4
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             Image(imageName)
                 .resizable()
                 .cornerRadius(20)
                 .frame(width: 160, height: 250)
-                .frame(maxWidth: .infinity, alignment: .leading)
             
-            Spacer()
-                .frame(height: imageToTitleSpacing)
+            Spacer().frame(height: imageToTitleSpacing)
             
             Text(title)
                 .font(AppFont.title(size: 18))
+                .lineLimit(1)
+                .truncationMode(.tail)
             
-            Spacer()
-                .frame(height: titleToAuthorSpacing)
+            Spacer().frame(height: titleToAuthorSpacing)
             
             Text(author)
                 .font(AppFont.regular(size: 14))
@@ -31,4 +30,3 @@ struct BookItem: View {
         }
     }
 }
-
